@@ -14,7 +14,7 @@ export default async(req: Request, res: Response) => {
     const isLink = await urls.findOne({link});
     if(!isLink) {
       const response = await axios(`https://api.shrtco.de/v2/shorten?url=${link}`);
-      await urls.insert({shortUrl: response.data.result.full_short_link});
+      await urls.insert({shortUrl: response.data.result.full_short_link, link});
       res.status(201);
       CustomResponse(true, res, 201, {shortUrl: response.data.result.full_short_link})
     } else {
